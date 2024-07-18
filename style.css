@@ -881,7 +881,8 @@ button[type="submit"]:hover {
 
 /*contact section script popup*/
 .contact-container {
-    width: 50%;
+    width: 90%;
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -941,7 +942,7 @@ button:hover {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 90%;
     max-width: 500px;
     border-radius: 8px;
 }
@@ -958,6 +959,18 @@ button:hover {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .contact-container {
+        width: 70%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .contact-container {
+        width: 50%;
+    }
 }
 
 
