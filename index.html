@@ -315,48 +315,40 @@
 
    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
-        (function() {
-            /*user id dito*/
-            emailjs.init("hVt-fZQeOvvaSYMs6"); // Replace 'YOUR_USER_ID' with your actual user ID from EmailJS
-        })();
-
+        // Initialize EmailJS with your service ID
+        emailjs.init('hVt-fZQeOvvaSYMs6');
+        
         function sendEmail(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            if (name && email && message) {
-
-                /*ur service id and ur template id*/
-                emailjs.send("service_t7852ko", "template_omwz5u5", {
-                    from_name: name,
-                    from_email: email,
-                    message: message
-                })
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Validate form fields
+            let name = document.getElementById('name').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let message = document.getElementById('message').value.trim();
+    
+            // Check if any field is empty
+            if (name === '' || email === '' || message === '') {
+                alert('Please fill in all fields.');
+                return;
+            }
+    
+            // Validate email format
+            let emailRegex = /\S+@\S+\.\S+/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+    
+            // Use EmailJS to send the email
+            emailjs.sendForm('service(_)t7852ko', 'template_omwz5u5', '#contactForm')
                 .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    document.getElementById('contactForm').reset();
-                    openModal();
+                    console.log('Email sent successfully:', response);
+                    document.getElementById('confirmationMessage').style.display = 'block';
+                    document.getElementById('contactForm').reset(); // Reset form fields
                 }, function(error) {
-                    console.log('FAILED...', error);
+                    console.error('Error sending email:', error);
+                    alert('There was an error sending your message. Please try again later.');
                 });
-            }
-        }
-
-        function openModal() {
-            document.getElementById('confirmationModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('confirmationModal').style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('confirmationModal')) {
-                closeModal();
-            }
         }
         
     </script>
