@@ -239,33 +239,33 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
-    <div class="contact-container">
-        <h2 class="text-3d" style="color: black;">Contact Us</h2>
-        <form id="contactForm">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-            </div>
-            <button type="submit" onclick="sendEmail(event)">Send Message</button>
-        </form>
+        <div class="contact-container">
+            <h2 class="text-3d" style="color: black;">Contact Us</h2>
+            <form id="contactForm" onsubmit="sendEmail(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Thank you for contacting us!</p>
+        </div>
     </div>
-</section>
-<!-- Modal -->
-<div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <p>Thank you for contacting us!</p>
-    </div>
-</div>
-
     
 
     
@@ -313,11 +313,11 @@
 
     <!--contact script-->
 
-   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
         // Initialize EmailJS with your service ID
         emailjs.init('hVt-fZQeOvvaSYMs6');
-        
+
         function sendEmail(event) {
             event.preventDefault(); // Prevent the default form submission
             
@@ -343,14 +343,28 @@
             emailjs.sendForm('service_t7852ko', 'template_omwz5u5', '#contactForm')
                 .then(function(response) {
                     console.log('Email sent successfully:', response);
-                    document.getElementById('confirmationMessage').style.display = 'block';
                     document.getElementById('contactForm').reset(); // Reset form fields
+                    openModal();
                 }, function(error) {
                     console.error('Error sending email:', error);
                     alert('There was an error sending your message. Please try again later.');
                 });
         }
         
+        function openModal() {
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        // Close the modal when the user clicks anywhere outside of the modal
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('confirmationModal')) {
+                closeModal();
+            }
+        }
     </script>
     
 
